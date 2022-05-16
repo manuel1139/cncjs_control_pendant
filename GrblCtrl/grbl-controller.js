@@ -8,9 +8,8 @@ function cb() {
     console.log("callback");
 }
 
-exports.GRBLController = function(Port, cncJsConn) {
 
-  
+exports.GRBLController = function(Port, cncJsConn) { 
    Port.on('data', ctrlData => {
 //        console.log(ctrlData);
 
@@ -18,8 +17,9 @@ exports.GRBLController = function(Port, cncJsConn) {
     
         if (keys != 0) {
             var command = keyMapping[keys];
-            socket.emit('command', options.port, command);
-		console.log(command);
+           socket.emit(command.cmd, options.port, 'gcode', command.gc);
+           socket.emit('command', options.port,  'reset'); 
+           console.log(command);
         }    
     })
 
@@ -30,3 +30,7 @@ exports.GRBLController = function(Port, cncJsConn) {
         });
     })
 }
+
+
+
+

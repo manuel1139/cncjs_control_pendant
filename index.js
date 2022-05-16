@@ -27,6 +27,7 @@ module.exports = function(options, callback) {
     options.socketPort = get(options, 'socketPort', 8000);
     options.controllerType = get(options, 'controllerType', 'Grbl');
     options.accessTokenLifetime = get(options, 'accessTokenLifetime', '30d');
+    options.port = get(options, 'poert', '/dev/ttyUSB0');
 
     if (!options.secret) {
         const cncrc = path.resolve(getUserHome(), '.cncrc');

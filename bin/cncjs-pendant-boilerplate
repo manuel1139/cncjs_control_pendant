@@ -62,9 +62,11 @@ var createServer = function(options) {
         // Grbl
         socket.on('Grbl:state', function(state) {
             store.controller.state = state;
+	    console.log(state);
         });
         socket.on('Grbl:settings', function(settings) {
             store.controller.settings = settings;
+	    console.log(settings);
         });
 
         // Smoothie
@@ -107,6 +109,7 @@ var createServer = function(options) {
             .description('Displays sender status')
             .action(function(args, callback) {
                 console.log(store.sender.status);
+		console.log(store.sender.settings);
                 callback();
             });
 
