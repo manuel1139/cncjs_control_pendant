@@ -1,5 +1,5 @@
 const  ByteLengthParser  = require('@serialport/parser-byte-length');
-const { keyMapping } = require('./key_mapping');
+const { KeyMappings } = require('./key_mappings');
 
 var blp = new ByteLengthParser({length: 8});
 var options = {};

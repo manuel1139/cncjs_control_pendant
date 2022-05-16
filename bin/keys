@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+ 
+var SPI = require('pi-spi');
+
+var spi = SPI.initialize("/dev/spidev0.0");
+spi.clockSpeed(240000);
+spi.dataMode(0x02);
+
+var sendCommand = function(num) {
+	send(num);
+}
+
+var send = function(num) {
+	const buf = Buffer.allocUnsafe(1);
+	buf.writeUInt8(num, 0);
+	console.log(buf);
+	spi.write(buf, function(e,d) { console.log(e); console.log(d); } );	
+}
+
+var initDisplay = function() {
+
+sendCommand(0x40);
+sendCommand(0x80 | 8 | 7);
+
+send(0xC0);
+  for ( i = 0; i < 16; i++) {
+    send(0x00);
+ } 
+
+}
+
+
+var sendData = function(address, data)
+{
+  sendCommand(0x44);
+  send(0xC0 | address);
+  send(data);
+}
+
+
+var setupDisplay = function() {
+  sendCommand(0x80 | 8 | 7);
+
+}
+
+var sendChar = function(pos, data, dot) {
+	sendData(pos << 1, data | (dot ? 0b10000000 : 0));
+
+}
+
+var setDisplayDigit = function(pos, data, dot) {
+	sendChar(pos, 0x22 & 0xF, dot);
+}
+
+
+initDisplay();
+setupDisplay();
+setDisplayDigit(1, 0x55, true);
+setDisplayDigit(0, 0x59, 1);

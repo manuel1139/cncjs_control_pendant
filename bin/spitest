@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+
+var SPI = require('pi-spi');
+
+var spi = SPI.initialize("/dev/spidev0.1");
+
+var test = Buffer.from("\x00BB9;1240;-8812;922\0");
+
+spi.clockSpeed(100000);
+//spi.dataMode(SPI.mode.CPOL);
+//spi.bitOrder(SPI.order.LSB_FIRST);
+
+
+async function f() {
+  console.log("starting");
+  while(1) {
+    await sleep(100);
+
+
+    b = Buffer.from("\2\0xX\0");
+  spi.transfer(b,5, function (e,d) { console.log(d.toString()); console.log(d); console.log(e) })
+    b = Buffer.from("\3\0xX\0");
+  spi.transfer(b,5, function (e,d) { console.log(d.toString()); console.log(d); console.log(e) })
+
+
+
+       } 
+   }
+
+async function f2() {
+  console.log("starting");
+  while(1) {
+    await sleep(100);
+
+
+    b = Buffer.from("\3\Blah0\0\0\0\0");
+   spi.transfer(b,10, function (e,d) { console.log(d.toString()); console.log(d); console.log(e) })
+
+
+
+       } 
+   }
+
+
+
+
+//f();
+f2();
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+} 
+
