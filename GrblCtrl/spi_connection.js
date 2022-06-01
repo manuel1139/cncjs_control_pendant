@@ -3,6 +3,7 @@ const SPI = require('pi-spi');
 const Gpio = require('pigpio').Gpio;
 
 var spi = SPI.initialize("/dev/spidev0.1");
+
 spi.clockSpeed(100000);
 
 const button = new Gpio(25, {
@@ -14,6 +15,7 @@ const button = new Gpio(25, {
 eventEmitter = new  EventEmitter();
 
 var old_val = 0;
+
 
 button.on('interrupt', (level) => {
   console.log("got interrup");
